@@ -13,8 +13,36 @@ namespace Upscale.Web.Controllers
             _context = context;
         }
 
+        // GET: Account/Welcome
+        [HttpGet]
+        public IActionResult Welcome()
+        {
+            return View();
+        }
+
+        // GET: Account/Login
         [HttpGet]
         public IActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Account/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            return View(model);
+        }
+
+        // GET: Account/Locked
+        [HttpGet]
+        public IActionResult Locked()
         {
             return View();
         }
