@@ -5,29 +5,33 @@ using Upscale.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- SECTION OF SERVICE CONFIGURATION (Dependency Injection) --- //
+// ── Services ─────────────────────────────────────────────────────────────────
 
 builder.Services.AddControllersWithViews();
 
-// Configuration of the database context with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Authentication configuration using cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Account/Login";
         options.AccessDeniedPath = "/Account/AccessDenied";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true;
     });
 
 builder.Services.AddScoped<IEmailService, SmtpEmailService>();
 
-// --- SECTION OF MIDDLEWARE CONFIGURATION (HTTP Request Pipeline) --- //
+// ── Pipeline ──────────────────────────────────────────────────────────────────
 
 var app = builder.Build();
+
+// ── Database: apply migrations + seed on startup ──────────────────────────────
+// This runs automatically the first time anyone clones and runs the project.
+// It is safe to call on every startup: MigrateAsync is idempotent and the seeder
+// checks for existing rows before inserting.
+await DbSeeder.InitialiseAsync(app.Services);
 
 if (!app.Environment.IsDevelopment())
 {

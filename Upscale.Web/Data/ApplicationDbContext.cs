@@ -4,28 +4,60 @@ using Upscale.Web.Models.Entities;
 namespace Upscale.Web.Data
 {
     /// <summary>
-    /// Database context responsible for managing user-related data and entity mapping.
+    /// Main EF Core database context for the Upscale application.
+    /// Manages Users and UserProfiles with their relationships and constraints.
     /// </summary>
     public class ApplicationDbContext : DbContext
     {
-        /// <summary>
-        /// Initializes a new instance of the context using the specified options.
-        /// </summary>
-        /// <param name="options">The options to be used by the DbContext.</param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
 
-        /// <summary>
-        /// Configures the schema and entity relationships for the database.
-        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Explicitly map entities to database tables
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<UserProfile>().ToTable("UserProfiles");
+            base.OnModelCreating(modelBuilder);
+
+            // ── Users ────────────────────────────────────────────────────
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(u => u.UserId);
+
+                entity.HasIndex(u => u.DocumentNumber).IsUnique();
+                entity.HasIndex(u => u.Email).IsUnique();
+
+                entity.Property(u => u.DocumentNumber)
+                      .IsRequired()
+                      .HasMaxLength(15)
+                      .IsUnicode(false);
+
+                entity.Property(u => u.Email)
+                      .IsRequired()
+                      .HasMaxLength(150)
+                      .IsUnicode(false);
+
+                entity.Property(u => u.FailedAttempts).HasDefaultValue(0);
+                entity.Property(u => u.IsLocked).HasDefaultValue(false);
+                entity.Property(u => u.IsActive).HasDefaultValue(true);
+            });
+
+            // ── UserProfiles ─────────────────────────────────────────────
+            modelBuilder.Entity<UserProfile>(entity =>
+            {
+                entity.HasKey(p => p.ProfileId);
+
+                // One-to-one: cada User tiene exactamente un UserProfile
+                entity.HasOne(p => p.User)
+                      .WithOne(u => u.Profile)
+                      .HasForeignKey<UserProfile>(p => p.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(p => p.UserId).IsUnique();
+
+                entity.Property(p => p.Nationality)
+                      .HasDefaultValue("Peruvian");
+            });
         }
     }
 }
