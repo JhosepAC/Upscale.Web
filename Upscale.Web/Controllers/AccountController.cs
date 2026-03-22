@@ -8,21 +8,31 @@ using System.Security.Cryptography;
 using System.Text;
 using Upscale.Web.Data;
 using Upscale.Web.Models.ViewModels;
+using Upscale.Web.Services;
 
 namespace Upscale.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private const int MaxFailedAttempts = 5;
+        private readonly IEmailService _emailService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(ApplicationDbContext context)
+        private const int MaxFailedAttempts = 5;
+        private const int LockoutMinutes = 15;
+
+        public AccountController(
+            ApplicationDbContext context,
+            IEmailService emailService,
+            ILogger<AccountController> logger)
         {
             _context = context;
+            _emailService = emailService;
+            _logger = logger;
         }
 
         // ──────────────────────────────────────────────────────────
-        //  PUBLICS
+        //  PUBLIC
         // ──────────────────────────────────────────────────────────
 
         [HttpGet]
@@ -56,6 +66,7 @@ namespace Upscale.Web.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var user = await _context.Users
+                .Include(u => u.Profile)
                 .FirstOrDefaultAsync(u => u.DocumentNumber == model.DocumentNumber);
 
             if (user == null || !user.IsActive)
@@ -82,8 +93,11 @@ namespace Upscale.Web.Controllers
                 if (user.FailedAttempts >= MaxFailedAttempts)
                 {
                     user.IsLocked = true;
-                    user.LockoutEnd = DateTime.Now.AddMinutes(15);
+                    user.LockoutEnd = DateTime.Now.AddMinutes(LockoutMinutes);
                     await _context.SaveChangesAsync();
+
+                    _ = SendAccountLockedEmailAsync(user);
+
                     return RedirectToAction("Locked", new { id = user.DocumentNumber });
                 }
 
@@ -124,7 +138,7 @@ namespace Upscale.Web.Controllers
         }
 
         // ──────────────────────────────────────────────────────────
-        //  PROTECTEDS
+        //  PROTECTED
         // ──────────────────────────────────────────────────────────
 
         [HttpGet]
@@ -238,6 +252,35 @@ namespace Upscale.Web.Controllers
         // ──────────────────────────────────────────────────────────
         //  HELPERS
         // ──────────────────────────────────────────────────────────
+        private async Task SendAccountLockedEmailAsync(Upscale.Web.Models.Entities.User user)
+        {
+            try
+            {
+                var fullName = user.Profile != null
+                    ? $"{user.Profile.FirstLastName} {user.Profile.SecondLastName}, {user.Profile.FirstName}".Trim()
+                    : user.DocumentNumber;
+
+                var lockoutEnd = user.LockoutEnd ?? DateTime.Now.AddMinutes(LockoutMinutes);
+
+                var htmlBody = AccountLockedEmailTemplate.Build(
+                    fullName: fullName,
+                    documentNumber: user.DocumentNumber,
+                    lockoutMinutes: LockoutMinutes,
+                    lockoutEnd: lockoutEnd);
+
+                await _emailService.SendAsync(
+                    toEmail: user.Email,
+                    toName: fullName,
+                    subject: "⚠️ Cuenta bloqueada temporalmente — CEPLAN",
+                    htmlBody: htmlBody);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,
+                    "Error inesperado al enviar correo de bloqueo para {DocumentNumber}.",
+                    user.DocumentNumber);
+            }
+        }
 
         private static ProfileViewModel MapToViewModel(Upscale.Web.Models.Entities.User user)
         {
