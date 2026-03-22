@@ -1,10 +1,16 @@
-﻿@{
+﻿@*
+    View: Lockout
+    Purpose: Notifies the user that their account has been temporarily disabled 
+    due to multiple failed login attempts.
+*@
+
+@{
     ViewData["Title"] = "Cuenta bloqueada";
 }
 
 <div class="login-card shadow-sm text-center">
     <div class="mb-4">
-        <i class="fa-solid fa-circle-exclamation text-danger" style="font-size: 4rem;"></i>
+        <i class="fa-solid fa-circle-exclamation text-danger" aria-hidden="true" style="font-size: 4rem;"></i>
     </div>
 
     <h4 class="fw-bold mb-3">Cuenta bloqueada temporalmente</h4>
@@ -14,12 +20,14 @@
         ha sido bloqueada por seguridad tras superar el límite de 5 intentos fallidos.
     </p>
 
-    <div class="alert alert-warning border-0 small">
+    <div class="alert alert-warning border-0 small" role="alert">
         <i class="fa-solid fa-clock me-2"></i>
         Por favor, inténtelo de nuevo en <strong>15 minutos</strong>.
     </div>
 
-    <a asp-action="Login" class="btn btn-ceplan w-100 py-2 mt-3">
-        Regresar al inicio
-    </a>
+    <div class="mt-4">
+        <a asp-action="Login" class="btn btn-ceplan w-100 py-2">
+            Regresar al inicio
+        </a>
+    </div>
 </div>

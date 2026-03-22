@@ -1,19 +1,34 @@
-﻿@{
+﻿@* View: Welcome / Activation Success
+    Purpose: Final confirmation page after a user has successfully activated 
+    their account. Directs the user to the Login screen.
+*@
+
+@{
     ViewData["Title"] = "Bienvenido";
     ViewData["BodyClass"] = "bg-welcome";
 }
 
 <div class="welcome-card animated fadeIn">
-    <img src="~/images/welcome-rocket.png" alt="Icono" class="rocket-icon" />
-    
-    <h4>¡Bienvenida, July!</h4>
-    
-    <div class="mb-4">
-        <p>Su cuenta en el aplicativo X está activada.</p>
-        <p>Ya puede iniciar sesión.</p>
+    <div class="text-center mb-4">
+        <img src="~/images/welcome-rocket.png"
+             alt="Cuenta activada exitosamente"
+             class="rocket-icon"
+             aria-hidden="true" />
     </div>
     
-    <a asp-action="Login" class="btn btn-ceplan w-100 py-3 mt-2 shadow-sm">
-        Iniciar sesión
-    </a>
+    @* Note: 'July' is a placeholder. Consider using @User.Identity.Name or a ViewBag property if dynamic *@
+    <h4 class="fw-bold mb-3">¡Bienvenido!</h4>
+    
+    <div class="welcome-message mb-4">
+        <p class="mb-1">Su cuenta en el aplicativo <strong>Upscale</strong> está activada.</p>
+        <p class="text-muted">Ya puede iniciar sesión en la plataforma.</p>
+    </div>
+    
+    <div class="mt-4">
+        <a asp-action="Login"
+               class="btn btn-ceplan w-100 py-3 shadow-sm d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-right-to-bracket me-2"></i>
+            Iniciar sesión
+        </a>
+    </div>
 </div>

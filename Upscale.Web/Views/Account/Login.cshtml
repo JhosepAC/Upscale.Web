@@ -1,40 +1,67 @@
-﻿@{
+﻿@* View: Login
+    Model: LoginViewModel
+    Purpose: Handles user authentication using DNI or CE (Foreign ID).
+    Includes dynamic input switching and client-side validation hooks.
+*@
+
+@{
     ViewData["Title"] = "Iniciar Sesión";
     ViewData["BodyClass"] = "bg-login";
 }
+
 @model Upscale.Web.Models.ViewModels.LoginViewModel
 
 <div class="d-flex flex-column align-items-center">
     <div class="login-card shadow-sm">
+        
         <div class="nav nav-pills nav-justified mb-4">
             <button class="nav-link active" onclick="switchDocument('DNI', 8, this)" type="button">DNI</button>
             <button class="nav-link" onclick="switchDocument('CE', 9, this)" type="button">CE</button>
         </div>
 
         <form asp-action="Login" method="post" onsubmit="return validateSubmit(event)">
+            @Html.AntiForgeryToken() @* Security measure: Prevents CSRF attacks *@
+
             <div class="mb-3 text-start">
-                <label class="form-label small fw-bold">Usuario</label>
+                <label asp-for="DocumentNumber" class="form-label small fw-bold">Usuario</label>
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0"><i class="fa-regular fa-user text-muted"></i></span>
-                    <input asp-for="DocumentNumber" class="form-control border-start-0 ps-0" id="userInput" maxlength="8" onkeypress="return isNumber(event)" placeholder="Ingresar usuario" />
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="fa-regular fa-user text-muted"></i>
+                    </span>
+                    <input asp-for="DocumentNumber"
+                           class="form-control border-start-0 ps-0"
+                           id="userInput"
+                           maxlength="8"
+                           onkeypress="return isNumber(event)"
+                           placeholder="Ingresar usuario" />
                 </div>
+                @* Client-side validation message container *@
                 <div id="userError" class="text-danger small mt-1 d-none">
                     <i class="fa-solid fa-circle-info"></i> Debe ingresar su DNI o carnet de extranjería
                 </div>
+                <span asp-validation-for="DocumentNumber" class="text-danger small"></span>
             </div>
 
             <div class="mb-3 text-start">
-                <label class="form-label small fw-bold">Contraseña</label>
+                <label asp-for="Password" class="form-label small fw-bold">Contraseña</label>
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
-                    <input asp-for="Password" type="password" class="form-control border-start-0 border-end-0 ps-0" id="passInput" placeholder="Ingresar contraseña" />
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="fa-solid fa-lock text-muted"></i>
+                    </span>
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control border-start-0 border-end-0 ps-0"
+                           id="passInput"
+                           placeholder="Ingresar contraseña" />
                     <span class="input-group-text bg-white border-start-0 cursor-pointer" onclick="togglePass()">
                         <i class="fa-regular fa-eye text-muted" id="eyeIcon"></i>
                     </span>
                 </div>
+                @* Client-side validation message container *@
                 <div id="passError" class="text-danger small mt-1 d-none">
                     <i class="fa-solid fa-circle-info"></i> Debe ingresar su contraseña
                 </div>
+                <span asp-validation-for="Password" class="text-danger small"></span>
             </div>
 
             <div class="text-start mb-4">
@@ -46,11 +73,19 @@
     </div>
 
     <div class="support-card mt-3 shadow-sm d-flex align-items-center p-3">
-        <i class="fa-solid fa-headset fs-2 me-3" style="color: var(--ceplan-blue);"></i>
-        <p class="mb-0 small">¿Necesita ayuda?, <a href="#" class="text-decoration-none fw-bold" style="color: var(--ceplan-blue);">contacte con el área de soporte.</a></p>
+        <i class="fa-solid fa-headset fs-2 me-3" style="color: var(--ceplan-blue);" aria-hidden="true"></i>
+        <p class="mb-0 small">
+            ¿Necesita ayuda?, <a href="#" class="text-decoration-none fw-bold" style="color: var(--ceplan-blue);">contacte con el área de soporte.</a>
+        </p>
     </div>
 </div>
 
 @section Scripts {
+    @* Loads logic for document switching and UI interactions *@
     <script src="~/js/login.js"></script>
+    
+    @* Include standard jQuery validation for server-side errors *@
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

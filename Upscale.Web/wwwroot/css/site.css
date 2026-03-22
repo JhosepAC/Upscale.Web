@@ -124,19 +124,19 @@ html, body {
     flex-shrink: 0;
 }
 
-    .sidebar.collapsed {
-        width: var(--sidebar-collapsed-width);
-        min-width: var(--sidebar-collapsed-width);
-    }
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+    min-width: var(--sidebar-collapsed-width);
+}
 
-        .sidebar.collapsed .nav-item span,
-        .sidebar.collapsed .nav-section {
-            opacity: 0;
-            pointer-events: none;
-            width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+.sidebar.collapsed .nav-item span,
+.sidebar.collapsed .nav-section {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 .toggle-btn {
     position: absolute;
@@ -159,11 +159,11 @@ html, body {
     padding: 0;
 }
 
-    .toggle-btn:hover {
-        background: var(--ceplan-blue);
-        color: #fff;
-        border-color: var(--ceplan-blue);
-    }
+.toggle-btn:hover {
+    background: var(--ceplan-blue);
+    color: #fff;
+    border-color: var(--ceplan-blue);
+}
 
 .sidebar-header {
     background-color: var(--ceplan-red);
@@ -195,14 +195,14 @@ html, body {
     padding: 8px 10px;
 }
 
-    .sidebar-nav::-webkit-scrollbar {
-        width: 4px;
-    }
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
 
-    .sidebar-nav::-webkit-scrollbar-thumb {
-        background: #ddd;
-        border-radius: 2px;
-    }
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+}
 
 .nav-section {
     font-size: 10px;
@@ -228,31 +228,31 @@ html, body {
     cursor: pointer;
 }
 
-    .nav-item i {
-        font-size: 1.05rem;
-        flex-shrink: 0;
-        width: 20px;
-        text-align: center;
-    }
+.nav-item i {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
 
-    .nav-item span {
-        font-size: 0.9rem;
-        font-weight: 400;
-        transition: opacity 0.2s, width 0.3s;
-        overflow: hidden;
-    }
+.nav-item span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: opacity 0.2s, width 0.3s;
+    overflow: hidden;
+}
 
-    .nav-item:hover {
-        background-color: #f0f4f8;
-        color: var(--ceplan-blue);
-        text-decoration: none;
-    }
+.nav-item:hover {
+    background-color: #f0f4f8;
+    color: var(--ceplan-blue);
+    text-decoration: none;
+}
 
-    .nav-item.active {
-        background-color: #eef3fb;
-        color: var(--ceplan-blue);
-        font-weight: 500;
-    }
+.nav-item.active {
+    background-color: #eef3fb;
+    color: var(--ceplan-blue);
+    font-weight: 500;
+}
 
 .sidebar-footer {
     border-top: 1px solid #f0f0f0;
@@ -264,10 +264,10 @@ html, body {
     color: #dc3545 !important;
 }
 
-    .logout-item:hover {
-        background-color: #fff5f5 !important;
-        color: #dc3545 !important;
-    }
+.logout-item:hover {
+    background-color: #fff5f5 !important;
+    color: #dc3545 !important;
+}
 
 /* =============================================
    MAIN AREA
@@ -313,10 +313,10 @@ html, body {
     justify-content: center;
 }
 
-    .icon-btn:hover {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.12);
-    }
+.icon-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
 
 .notification-btn {
     position: relative;
@@ -352,10 +352,10 @@ html, body {
     transition: background 0.2s;
 }
 
-    .user-profile-link:hover {
-        background: rgba(255, 255, 255, 0.12);
-        text-decoration: none;
-    }
+.user-profile-link:hover {
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+}
 
 .user-info {
     text-align: right;
@@ -453,9 +453,9 @@ html, body {
     transition: background-color 0.2s;
 }
 
-    .btn-ceplan:hover {
-        background-color: var(--ceplan-blue-hover);
-    }
+.btn-ceplan:hover {
+    background-color: var(--ceplan-blue-hover);
+}
 
 .nav-pills .nav-link {
     color: var(--text-muted);
@@ -464,11 +464,11 @@ html, body {
     margin: 0 2px;
 }
 
-    .nav-pills .nav-link.active {
-        background-color: #7a828a !important;
-        border-color: #7a828a;
-        color: white;
-    }
+.nav-pills .nav-link.active {
+    background-color: #7a828a !important;
+    border-color: #7a828a;
+    color: white;
+}
 
 .input-group-text {
     color: #adb5bd;
@@ -638,24 +638,24 @@ html, body {
     font-family: var(--font-family);
 }
 
-    .profile-tab:hover {
-        color: var(--text-primary);
-    }
+.profile-tab:hover {
+    color: var(--text-primary);
+}
 
-    .profile-tab.active {
-        color: var(--ceplan-blue);
-        border-bottom-color: var(--ceplan-blue);
-        font-weight: 500;
-    }
+.profile-tab.active {
+    color: var(--ceplan-blue);
+    border-bottom-color: var(--ceplan-blue);
+    font-weight: 500;
+}
 
 .profile-tab-content {
     display: none;
     padding: 28px 32px 32px;
 }
 
-    .profile-tab-content.active {
-        display: block;
-    }
+.profile-tab-content.active {
+    display: block;
+}
 
 .profile-fields-grid {
     display: grid;
@@ -750,9 +750,9 @@ html, body {
     transition: background-color 0.2s;
 }
 
-    .btn-save:hover {
-        background-color: var(--ceplan-blue-hover);
-    }
+.btn-save:hover {
+    background-color: var(--ceplan-blue-hover);
+}
 
 .tab-empty-state {
     display: flex;
