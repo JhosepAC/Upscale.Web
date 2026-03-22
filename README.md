@@ -41,7 +41,8 @@ El proyecto emplea el patrón **MVC** con una clara separación de responsabilid
 * **Controllers:** Orquestación de lógica de negocio y flujos de autorización.
 * **Models:** Entidades de dominio y ViewModels especializados para la capa de presentación.
 * **Services:** Abstracción de servicios transversales (SMTP Email Service).
-* **Data:** Capa de persistencia y configuración de contextos mediante `ApplicationDbContext`.
+* **Data:** Capa de persistencia (`ApplicationDbContext`) y `DbSeeder` para automatización.
+* **Migrations:** Historial de versiones de la base de datos (incluido para control de versiones).
 
 ---
 
@@ -66,6 +67,15 @@ El proyecto emplea el patrón **MVC** con una clara separación de responsabilid
     ```
 
 ---
+
+## 👥 Usuarios de prueba
+
+| N.º Documento | Contraseña   | Nombre              | Cargo                     |
+| ------------- | ------------ | ------------------- | ------------------------- |
+| **71234567**  | `Admin@2026` | July Vargas Mendoza | Analista de Planeamiento  |
+| **45678901**  | `User.9876`  | Ricardo Luna Perez  | Especialista Presupuestal |
+| **12345678**  | `Clave#2024` | Fátima Encarnación  | Coordinadora RRHH         |
+
 
 ## 📩 Contact & Socials
 
