@@ -49,7 +49,7 @@ El proyecto emplea el patrón **MVC** con una clara separación de responsabilid
 
 1.  **Clonación del Repositorio:**
     ```bash
-    git clone [https://github.com/JhosepAC/Upscale.Web.git](https://github.com/JhosepAC/Upscale.Web.git)
+    git clone https://github.com/JhosepAC/Upscale.Web.git
     ```
 
 2.  **Configuración de Base de Datos:**
