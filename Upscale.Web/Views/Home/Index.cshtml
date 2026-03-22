@@ -4,6 +4,6 @@
 
 <div class="welcome-center">
     <h1 class="welcome-title">
-        ¡Bienvenido, <span class="welcome-name">@User.Identity.Name</span>!
+        ¡Bienvenido, <span class="welcome-name">@User.FindFirst("FirstName")?.Value</span>!
     </h1>
 </div>

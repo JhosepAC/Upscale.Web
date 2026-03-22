@@ -123,7 +123,16 @@ namespace Upscale.Web.Controllers
             user.LockoutEnd = null;
             await _context.SaveChangesAsync();
 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.DocumentNumber) };
+            var fullName = user.Profile != null
+                ? $"{user.Profile.FirstName} {user.Profile.FirstLastName} {user.Profile.SecondLastName}"
+                : user.DocumentNumber;
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.DocumentNumber),
+                new Claim("FirstName", fullName)
+            };
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             await HttpContext.SignInAsync(
