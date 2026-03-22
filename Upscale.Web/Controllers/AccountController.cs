@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -50,23 +51,35 @@ namespace Upscale.Web.Controllers
                 return View(model);
             }
 
-            if (user.IsLocked && user.LockoutEnd > DateTime.UtcNow)
+            if (user.IsLocked)
             {
-                return RedirectToAction("Locked");
+                if (user.LockoutEnd.HasValue && user.LockoutEnd > DateTime.Now)
+                {
+                    return RedirectToAction("Locked", new { id = user.DocumentNumber });
+                }
+                else
+                {
+                    user.IsLocked = false;
+                    user.FailedAttempts = 0;
+                    user.LockoutEnd = null;
+                    await _context.SaveChangesAsync();
+                }
             }
 
             if (!VerifyPasswordHash(model.Password, user.PasswordHash, user.PasswordSalt))
             {
                 user.FailedAttempts++;
+
                 if (user.FailedAttempts >= 5)
                 {
                     user.IsLocked = true;
-                    user.LockoutEnd = DateTime.UtcNow.AddMinutes(15);
+                    user.LockoutEnd = DateTime.Now.AddMinutes(15);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Locked", new { id = user.DocumentNumber });
                 }
 
                 await _context.SaveChangesAsync();
-
-                ModelState.AddModelError(string.Empty, "Credenciales incorrectas.");
+                ModelState.AddModelError(string.Empty, "Contraseña incorrecta.");
                 return View(model);
             }
 
@@ -75,30 +88,19 @@ namespace Upscale.Web.Controllers
             user.LockoutEnd = null;
             await _context.SaveChangesAsync();
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.DocumentNumber),
-                new Claim(ClaimTypes.Email, user.Email ?? "")
-            };
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.DocumentNumber) };
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            var claimsIdentity = new ClaimsIdentity(
-                claims,
-                CookieAuthenticationDefaults.AuthenticationScheme
-            );
-
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                claimsPrincipal,
-                new AuthenticationProperties
-                {
-                    IsPersistent = model.RememberMe,
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
-                }
-            );
-
+            Console.WriteLine("Mensaje exitoso");
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Locked(string id)
+        {
+            ViewBag.DocumentNumber = id;
+            return View();
         }
 
         private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)

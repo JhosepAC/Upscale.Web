@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Cuenta bloqueada";
+}
+
+<div class="login-card shadow-sm text-center">
+    <div class="mb-4">
+        <i class="fa-solid fa-circle-exclamation text-danger" style="font-size: 4rem;"></i>
+    </div>
+
+    <h4 class="fw-bold mb-3">Cuenta bloqueada temporalmente</h4>
+    
+    <p class="text-muted mb-4">
+        Estimado usuario, su cuenta asociada al documento <strong>@ViewBag.DocumentNumber</strong>
+        ha sido bloqueada por seguridad tras superar el límite de 5 intentos fallidos.
+    </p>
+
+    <div class="alert alert-warning border-0 small">
+        <i class="fa-solid fa-clock me-2"></i>
+        Por favor, inténtelo de nuevo en <strong>15 minutos</strong>.
+    </div>
+
+    <a asp-action="Login" class="btn btn-ceplan w-100 py-2 mt-3">
+        Regresar al inicio
+    </a>
+</div>
