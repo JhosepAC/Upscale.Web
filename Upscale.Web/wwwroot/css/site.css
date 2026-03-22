@@ -65,6 +65,7 @@ html, body {
 .bg-login .auth-main {
     background: #e9ecef url('../images/background-login-alt.png') no-repeat;
 }
+
 .header-ceplan {
     background-color: var(--ceplan-red);
     height: var(--header-height);
@@ -123,19 +124,19 @@ html, body {
     flex-shrink: 0;
 }
 
-.sidebar.collapsed {
-    width: var(--sidebar-collapsed-width);
-    min-width: var(--sidebar-collapsed-width);
-}
+    .sidebar.collapsed {
+        width: var(--sidebar-collapsed-width);
+        min-width: var(--sidebar-collapsed-width);
+    }
 
-.sidebar.collapsed .nav-item span,
-.sidebar.collapsed .nav-section {
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-}
+        .sidebar.collapsed .nav-item span,
+        .sidebar.collapsed .nav-section {
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
 
 .toggle-btn {
     position: absolute;
@@ -158,11 +159,11 @@ html, body {
     padding: 0;
 }
 
-.toggle-btn:hover {
-    background: var(--ceplan-blue);
-    color: #fff;
-    border-color: var(--ceplan-blue);
-}
+    .toggle-btn:hover {
+        background: var(--ceplan-blue);
+        color: #fff;
+        border-color: var(--ceplan-blue);
+    }
 
 .sidebar-header {
     background-color: var(--ceplan-red);
@@ -194,14 +195,14 @@ html, body {
     padding: 8px 10px;
 }
 
-.sidebar-nav::-webkit-scrollbar {
-    width: 4px;
-}
+    .sidebar-nav::-webkit-scrollbar {
+        width: 4px;
+    }
 
-.sidebar-nav::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 2px;
-}
+    .sidebar-nav::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 2px;
+    }
 
 .nav-section {
     font-size: 10px;
@@ -227,31 +228,31 @@ html, body {
     cursor: pointer;
 }
 
-.nav-item i {
-    font-size: 1.05rem;
-    flex-shrink: 0;
-    width: 20px;
-    text-align: center;
-}
+    .nav-item i {
+        font-size: 1.05rem;
+        flex-shrink: 0;
+        width: 20px;
+        text-align: center;
+    }
 
-.nav-item span {
-    font-size: 0.9rem;
-    font-weight: 400;
-    transition: opacity 0.2s, width 0.3s;
-    overflow: hidden;
-}
+    .nav-item span {
+        font-size: 0.9rem;
+        font-weight: 400;
+        transition: opacity 0.2s, width 0.3s;
+        overflow: hidden;
+    }
 
-.nav-item:hover {
-    background-color: #f0f4f8;
-    color: var(--ceplan-blue);
-    text-decoration: none;
-}
+    .nav-item:hover {
+        background-color: #f0f4f8;
+        color: var(--ceplan-blue);
+        text-decoration: none;
+    }
 
-.nav-item.active {
-    background-color: #eef3fb;
-    color: var(--ceplan-blue);
-    font-weight: 500;
-}
+    .nav-item.active {
+        background-color: #eef3fb;
+        color: var(--ceplan-blue);
+        font-weight: 500;
+    }
 
 .sidebar-footer {
     border-top: 1px solid #f0f0f0;
@@ -263,10 +264,10 @@ html, body {
     color: #dc3545 !important;
 }
 
-.logout-item:hover {
-    background-color: #fff5f5 !important;
-    color: #dc3545 !important;
-}
+    .logout-item:hover {
+        background-color: #fff5f5 !important;
+        color: #dc3545 !important;
+    }
 
 /* =============================================
    MAIN AREA
@@ -312,10 +313,10 @@ html, body {
     justify-content: center;
 }
 
-.icon-btn:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.12);
-}
+    .icon-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.12);
+    }
 
 .notification-btn {
     position: relative;
@@ -351,10 +352,10 @@ html, body {
     transition: background 0.2s;
 }
 
-.user-profile-link:hover {
-    background: rgba(255, 255, 255, 0.12);
-    text-decoration: none;
-}
+    .user-profile-link:hover {
+        background: rgba(255, 255, 255, 0.12);
+        text-decoration: none;
+    }
 
 .user-info {
     text-align: right;
@@ -452,9 +453,9 @@ html, body {
     transition: background-color 0.2s;
 }
 
-.btn-ceplan:hover {
-    background-color: var(--ceplan-blue-hover);
-}
+    .btn-ceplan:hover {
+        background-color: var(--ceplan-blue-hover);
+    }
 
 .nav-pills .nav-link {
     color: var(--text-muted);
@@ -463,11 +464,11 @@ html, body {
     margin: 0 2px;
 }
 
-.nav-pills .nav-link.active {
-    background-color: #7a828a !important;
-    border-color: #7a828a;
-    color: white;
-}
+    .nav-pills .nav-link.active {
+        background-color: #7a828a !important;
+        border-color: #7a828a;
+        color: white;
+    }
 
 .input-group-text {
     color: #adb5bd;
@@ -637,15 +638,15 @@ html, body {
     font-family: var(--font-family);
 }
 
-.profile-tab:hover {
-    color: var(--text-primary);
-}
+    .profile-tab:hover {
+        color: var(--text-primary);
+    }
 
-.profile-tab.active {
-    color: var(--ceplan-blue);
-    border-bottom-color: var(--ceplan-blue);
-    font-weight: 500;
-}
+    .profile-tab.active {
+        color: var(--ceplan-blue);
+        border-bottom-color: var(--ceplan-blue);
+        font-weight: 500;
+    }
 
 .profile-tab-content {
     display: none;
@@ -749,9 +750,9 @@ html, body {
     transition: background-color 0.2s;
 }
 
-.btn-save:hover {
-    background-color: var(--ceplan-blue-hover);
-}
+    .btn-save:hover {
+        background-color: var(--ceplan-blue-hover);
+    }
 
 .tab-empty-state {
     display: flex;
@@ -930,4 +931,73 @@ html, body {
     .session-modal__actions {
         justify-content: center;
     }
+}
+
+/* =============================================
+   TOAST: SESSION EXPIRED
+   ============================================= */
+.session-expired-toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    background: #ffffff;
+    border: 1px solid #BFDBFE;
+    border-bottom: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    max-width: 420px;
+    width: calc(100vw - 56px);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.session-expired-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.session-expired-toast__inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 20px 16px;
+}
+
+.session-expired-toast__icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #EFF6FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563EB;
+    font-size: 1rem;
+    margin-top: 1px;
+}
+
+.session-expired-toast__text {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.session-expired-toast__progress {
+    height: 4px;
+    width: 100%;
+    background: var(--ceplan-blue);
+    transition-property: width;
+    transition-timing-function: linear;
+    border-radius: 0 0 10px 10px;
+}
+
+.session-expired-toast__progress--running {
+    width: 0%;
 }

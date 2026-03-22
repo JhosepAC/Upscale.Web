@@ -21,13 +21,15 @@ namespace Upscale.Web.Controllers
             _context = context;
         }
 
+        // ──────────────────────────────────────────────────────────
+        //  PUBLICS
+        // ──────────────────────────────────────────────────────────
+
         [HttpGet]
         public IActionResult Welcome()
         {
             if (User.Identity.IsAuthenticated)
-            {
                 return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
@@ -35,9 +37,7 @@ namespace Upscale.Web.Controllers
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
-            {
                 return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
@@ -106,7 +106,12 @@ namespace Upscale.Web.Controllers
 
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity));
+                new ClaimsPrincipal(claimsIdentity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+                });
 
             return RedirectToAction("Index", "Home");
         }
@@ -117,6 +122,10 @@ namespace Upscale.Web.Controllers
             ViewBag.DocumentNumber = id;
             return View();
         }
+
+        // ──────────────────────────────────────────────────────────
+        //  PROTECTEDS
+        // ──────────────────────────────────────────────────────────
 
         [HttpGet]
         [Authorize]
@@ -131,7 +140,6 @@ namespace Upscale.Web.Controllers
                 .FirstOrDefaultAsync(u => u.DocumentNumber == documentNumber);
 
             if (user == null) return RedirectToAction("Login");
-
             return View(MapToViewModel(user));
         }
 
@@ -198,9 +206,23 @@ namespace Upscale.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExtendSession()
         {
+            var token = Request.Headers["RequestVerificationToken"].ToString();
+            if (string.IsNullOrEmpty(token))
+                return Unauthorized(new { error = "Token CSRF ausente." });
+
+            try
+            {
+                var antiforgery = HttpContext.RequestServices
+                    .GetRequiredService<Microsoft.AspNetCore.Antiforgery.IAntiforgery>();
+                await antiforgery.ValidateRequestAsync(HttpContext);
+            }
+            catch
+            {
+                return Unauthorized(new { error = "Token CSRF inválido." });
+            }
+
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 HttpContext.User,
@@ -212,6 +234,10 @@ namespace Upscale.Web.Controllers
 
             return Ok(new { extended = true });
         }
+
+        // ──────────────────────────────────────────────────────────
+        //  HELPERS
+        // ──────────────────────────────────────────────────────────
 
         private static ProfileViewModel MapToViewModel(Upscale.Web.Models.Entities.User user)
         {

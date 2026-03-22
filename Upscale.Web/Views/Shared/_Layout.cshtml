@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 <body class="@(User.Identity.IsAuthenticated ? "dashboard-body" : (ViewData["BodyClass"] ?? "auth-body"))">
+
     @if (User.Identity.IsAuthenticated)
     {
         <div class="dashboard-wrapper">
@@ -68,7 +69,6 @@
             </aside>
 
             <div class="main-area">
-
                 <header class="top-navbar">
                     <div class="top-navbar-right">
                         <button class="icon-btn" title="Ayuda" aria-label="Ayuda">
@@ -95,7 +95,6 @@
                 <main class="main-content">
                     @RenderBody()
                 </main>
-
             </div>
         </div>
 
@@ -106,11 +105,9 @@
              aria-labelledby="sessionModalTitle"
              aria-modal="true">
             <div class="session-modal">
-
                 <div class="session-modal__icon">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
-
                 <div class="session-modal__body">
                     <p class="session-modal__title" id="sessionModalTitle">
                         Su sesión esta a punto de expirar
@@ -121,18 +118,28 @@
                         Para continuar, seleccione "Extender sesión"
                     </p>
                 </div>
-
                 <div class="session-modal__actions">
                     <button type="button" id="btnExtendSession" class="btn-extend-session">
                         Extender sesión
                     </button>
                 </div>
-
             </div>
         </div>
     }
     else
     {
+        <div id="sessionExpiredToast" class="session-expired-toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="session-expired-toast__inner">
+                <div class="session-expired-toast__icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <p class="session-expired-toast__text">
+                    Su sesión ha expirado debido a inactividad. Por favor, inicie sesión nuevamente.
+                </p>
+            </div>
+            <div class="session-expired-toast__progress" id="toastProgress"></div>
+        </div>
+
         <div class="auth-wrapper">
             <header class="header-ceplan">
                 <div class="ms-auto">
@@ -156,10 +163,10 @@
     {
         <script>
                 (function () {
-                    const sidebar    = document.getElementById('sidebar');
-                    const toggleBtn  = document.getElementById('toggleBtn');
-                    const toggleIcon = document.getElementById('toggleIcon');
-                    const KEY        = 'sidebar_collapsed';
+                    var sidebar    = document.getElementById('sidebar');
+                    var toggleBtn  = document.getElementById('toggleBtn');
+                    var toggleIcon = document.getElementById('toggleIcon');
+                    var KEY        = 'sidebar_collapsed';
 
                     if (localStorage.getItem(KEY) === 'true') {
                         sidebar.classList.add('collapsed');
@@ -167,7 +174,7 @@
                     }
 
                     toggleBtn.addEventListener('click', function () {
-                        const collapsed = sidebar.classList.toggle('collapsed');
+                        var collapsed = sidebar.classList.toggle('collapsed');
                         localStorage.setItem(KEY, collapsed);
                         toggleIcon.classList.replace(
                             collapsed ? 'fa-chevron-left'  : 'fa-chevron-right',
@@ -178,25 +185,30 @@
 
                 (function () {
 
-                    const IDLE_TIMEOUT_MS  = 60 * 1000;
-                    const WARN_COUNTDOWN_S = 60;
+                    var IDLE_TIMEOUT_MS  = 60 * 1000;
+                    var WARN_COUNTDOWN_S = 60;
 
-                    const overlay    = document.getElementById('sessionOverlay');
-                    const countdownEl = document.getElementById('sessionCountdown');
-                    const btnExtend  = document.getElementById('btnExtendSession');
-                    const logoutForm = document.getElementById('logoutForm');
+                    var overlay     = document.getElementById('sessionOverlay');
+                    var countdownEl = document.getElementById('sessionCountdown');
+                    var btnExtend   = document.getElementById('btnExtendSession');
+                    var logoutForm  = document.getElementById('logoutForm');
 
-                    let idleTimer    = null;
-                    let warnInterval = null;
-                    let modalOpen    = false;
+                    var idleTimer    = null;
+                    var warnInterval = null;
+                    var modalOpen    = false;
+                    var extending    = false;
+
+                    function getCsrfToken() {
+                        var el = document.querySelector('input[name="__RequestVerificationToken"]');
+                        return el ? el.value : '';
+                    }
 
                     function openModal() {
                         if (modalOpen) return;
                         modalOpen = true;
 
-                        let remaining = WARN_COUNTDOWN_S;
+                        var remaining = WARN_COUNTDOWN_S;
                         countdownEl.textContent = remaining;
-
                         overlay.classList.add('session-overlay--visible');
                         overlay.setAttribute('aria-hidden', 'false');
                         btnExtend.focus();
@@ -207,28 +219,53 @@
 
                             if (remaining <= 0) {
                                 clearInterval(warnInterval);
+                                warnInterval = null;
+                                sessionStorage.setItem('session_expired', '1');
                                 logoutForm.submit();
                             }
                         }, 1000);
                     }
 
-                    function closeModalAndExtend() {
+                    function closeModal() {
                         if (!modalOpen) return;
                         modalOpen = false;
 
-                        clearInterval(warnInterval);
+                        if (warnInterval) {
+                            clearInterval(warnInterval);
+                            warnInterval = null;
+                        }
+
                         overlay.classList.remove('session-overlay--visible');
                         overlay.setAttribute('aria-hidden', 'true');
+                    }
 
-                        var token = (document.querySelector('input[name="__RequestVerificationToken"]') || {}).value || '';
+                    function extendSession() {
+                        if (extending) return;
+                        extending = true;
+
+                        closeModal();
+
                         fetch('/Account/ExtendSession', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'RequestVerificationToken': getCsrfToken(),
                                 'X-Requested-With': 'XMLHttpRequest',
-                                'RequestVerificationToken': token
+                                'Content-Type': 'application/json'
                             }
-                        }).catch(function () { });
+                        })
+                        .then(function (response) {
+                            extending = false;
+                            if (response.ok) {
+                                resetIdleTimer();
+                            } else {
+                                sessionStorage.setItem('session_expired', '1');
+                                logoutForm.submit();
+                            }
+                        })
+                        .catch(function () {
+                            extending = false;
+                            resetIdleTimer();
+                        });
                     }
 
                     function resetIdleTimer() {
@@ -242,12 +279,40 @@
                             document.addEventListener(evt, resetIdleTimer, { passive: true });
                         });
 
-                    btnExtend.addEventListener('click', function () {
-                        closeModalAndExtend();
-                        resetIdleTimer();
+                    btnExtend.addEventListener('click', extendSession);
+                    resetIdleTimer();
+
+                })();
+        </script>
+    }
+    else
+    {
+        <script>
+                (function () {
+                    var TOAST_DURATION_MS = 10 * 1000;   // 10 segundos visibles
+
+                    if (sessionStorage.getItem('session_expired') !== '1') return;
+
+                    sessionStorage.removeItem('session_expired');
+
+                    var toast    = document.getElementById('sessionExpiredToast');
+                    var progress = document.getElementById('toastProgress');
+
+                    if (!toast || !progress) return;
+
+                    toast.classList.add('session-expired-toast--visible');
+
+                    progress.style.transitionDuration = TOAST_DURATION_MS + 'ms';
+
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            progress.classList.add('session-expired-toast__progress--running');
+                        });
                     });
 
-                    resetIdleTimer();
+                    setTimeout(function () {
+                        toast.classList.remove('session-expired-toast--visible');
+                    }, TOAST_DURATION_MS);
 
                 })();
         </script>
