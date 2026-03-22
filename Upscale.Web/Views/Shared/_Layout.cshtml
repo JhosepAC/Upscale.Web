@@ -35,23 +35,26 @@
                         <span>Inicio</span>
                     </a>
 
-                    <a asp-controller="Users" asp-action="Index"
-                           class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "active" : "")"
-                           title="Gestión de usuarios">
+                    <a href="javascript:void(0)"
+                           class="nav-item"
+                           style="cursor: default; opacity: 0.6;"
+                           title="Próximamente: Gestión de usuarios">
                         <i class="fa-solid fa-users"></i>
                         <span>Gestión de usuarios</span>
                     </a>
-
-                    <a asp-controller="Reports" asp-action="Index"
-                           class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Reports" ? "active" : "")"
-                           title="Reportes">
+                    
+                    <a href="javascript:void(0)"
+                           class="nav-item"
+                           style="cursor: default; opacity: 0.6;"
+                           title="Próximamente: Reportes">
                         <i class="fa-solid fa-chart-bar"></i>
                         <span>Reportes</span>
                     </a>
 
-                    <a asp-controller="Search" asp-action="Index"
-                           class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Search" ? "active" : "")"
-                           title="Búsqueda">
+                    <a href="javascript:void(0)"
+                           class="nav-item"
+                           style="cursor: default; opacity: 0.6;"
+                           title="Próximamente: Búsqueda">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <span>Búsqueda</span>
                     </a>
