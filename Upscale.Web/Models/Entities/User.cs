@@ -20,6 +20,8 @@ namespace Upscale.Web.Models.Entities
         public bool IsLocked { get; set; } = false;
         public DateTime? LockoutEnd { get; set; }
 
+        public bool IsActive { get; set; } = true;
+
         public virtual UserProfile Profile { get; set; }
     }
 }
