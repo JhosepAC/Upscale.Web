@@ -82,8 +82,13 @@
 
                         <a asp-controller="Account" asp-action="Profile" class="user-profile-link" title="Ver perfil">
                             <div class="user-info text-end">
-                                <div class="user-name">@User.Identity.Name</div>
-                                <div class="user-role">Cargo del Usuario</div>
+                                <div class="user-name">
+                                    @User.FindFirst("FullName")?.Value
+                                </div>
+
+                                <div class="user-role">
+                                    @User.FindFirst("JobTitle")?.Value
+                                </div>
                             </div>
                             <div class="user-avatar">
                                 <i class="fa-solid fa-circle-user"></i>

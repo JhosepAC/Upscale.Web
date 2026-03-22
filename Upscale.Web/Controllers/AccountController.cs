@@ -127,10 +127,13 @@ namespace Upscale.Web.Controllers
                 ? $"{user.Profile.FirstName} {user.Profile.FirstLastName} {user.Profile.SecondLastName}"
                 : user.DocumentNumber;
 
+            var jobTitle = user.Profile?.JobTitle ?? "Sin cargo";
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.DocumentNumber),
-                new Claim("FirstName", fullName)
+                new Claim("FullName", fullName),
+                new Claim("JobTitle", jobTitle)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
