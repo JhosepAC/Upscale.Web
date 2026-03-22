@@ -51,13 +51,13 @@ namespace Upscale.Web.Models.Entities
 
         [MaxLength(150)]
         [EmailAddress]
-        public string SecondaryEmail { get; set; }
+        public string? SecondaryEmail { get; set; }
 
         [MaxLength(25)]
-        public string MobilePhone { get; set; }
+        public string? MobilePhone { get; set; }
 
         [MaxLength(25)]
-        public string SecondaryPhone { get; set; }
+        public string? SecondaryPhone { get; set; }
 
         // --- EMPLOYMENT DETAILS ---
 

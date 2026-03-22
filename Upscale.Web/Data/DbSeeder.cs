@@ -25,27 +25,27 @@ namespace Upscale.Web.Data
             new("71234567",  "Admin@2026",  "july.vargas@ceplan.gob.pe",
                 "July", "Vargas", "Mendoza", "DNI",
                 new DateTime(1995, 3, 12), "Peruana", "Female",
-                "Analista de Planeamiento", "CEPLAN"),
+                "Analista de Planeamiento", "CEPLAN", "Plazo Indeterminado"),
 
             new("45678901",  "User.9876",   "ricardo.luna@ceplan.gob.pe",
                 "Ricardo", "Luna", "Perez", "DNI",
                 new DateTime(1988, 7, 22), "Peruana", "Male",
-                "Especialista Presupuestal", "CEPLAN"),
+                "Especialista Presupuestal", "CEPLAN", "Plazo Indeterminado"),
 
             new("12345678",  "Clave#2024",  "ana.torres@ceplan.gob.pe",
                 "Fátima", "Encarnación", "Castro", "DNI",
                 new DateTime(1992, 11, 5), "Peruana", "Female",
-                "Coordinadora RRHH", "CEPLAN"),
+                "Coordinadora RRHH", "CEPLAN", "Plazo Indeterminado"),
 
             new("000123456", "P@ssw0rd1",   "manuel.gomez@externo.pe",
                 "Manuel", "Gomez", "Ferrer", "CE",
                 new DateTime(1985, 1, 30), "Venezolana", "Male",
-                "Consultor IT", "Ministerio de Economía"),
+                "Consultor IT", "Ministerio de Economía", "Plazo Indeterminado"),
 
             new("000987654", "Guest*55",    "elena.schmidt@externo.pe",
                 "Elena", "Schmidt", "Braun", "CE",
                 new DateTime(1990, 9, 15), "Alemana", "Female",
-                "Asesora Técnica", "GIZ Cooperación"),
+                "Asesora Técnica", "GIZ Cooperación", "Plazo Indeterminado"),
         };
 
         /// <summary>
@@ -77,7 +77,6 @@ namespace Upscale.Web.Data
         {
             foreach (var seed in SeedUsers)
             {
-                // Skip if the user already exists (idempotent)
                 if (await db.Users.AnyAsync(u => u.DocumentNumber == seed.DocumentNumber))
                     continue;
 
@@ -103,12 +102,18 @@ namespace Upscale.Web.Data
                         Gender = seed.Gender,
                         JobTitle = seed.JobTitle,
                         Organization = seed.Organization,
+
+                        MobilePhone = "9" + seed.DocumentNumber.Substring(0, Math.Min(8, seed.DocumentNumber.Length)),
+                        ContractType = "Indefinido",
+                        HireDate = DateTime.Now,
+
+                        SecondaryEmail = null,
+                        SecondaryPhone = null
                     }
                 };
 
                 db.Users.Add(user);
-                logger.LogInformation("Seeding user: {DocumentNumber} ({Email}).",
-                    seed.DocumentNumber, seed.Email);
+                logger.LogInformation("Seeding user: {DocumentNumber} ({Email}).", seed.DocumentNumber, seed.Email);
             }
 
             await db.SaveChangesAsync();
@@ -139,6 +144,7 @@ namespace Upscale.Web.Data
             string Nationality,
             string Gender,
             string JobTitle,
-            string Organization);
+            string Organization,
+            string ContractType);
     }
 }
