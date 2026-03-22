@@ -1,36 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+/* =============================================
+   CSS VARIABLES
+   ============================================= */
 :root {
     --font-family: 'Roboto', sans-serif;
+    /* CEPLAN */
     --ceplan-red: #A32D2F;
     --ceplan-red-dark: #8B2527;
     --ceplan-blue: #0055AB;
     --ceplan-blue-hover: #004489;
+    /* Text */
     --text-primary: #333333;
     --text-muted: #666666;
+    /* Layout */
     --header-height: 55px;
     --footer-height: 65px;
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 72px;
+    --top-navbar-height: 70px;
+    --transition-speed: 0.3s;
+}
+
+/* =============================================
+   RESET BASE
+   ============================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 html, body {
-    height: 100vh;
+    height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     font-family: var(--font-family);
     color: var(--text-primary);
-    background: #f0f0f0 url('../images/background-ceplan.png') no-repeat center center fixed;
-    background-size: cover;
 }
 
-.bg-ceplan-default {
-    background: #f0f0f0 url('../images/background-ceplan.png') no-repeat center center fixed;
-    background-size: cover;
-}
-
-.bg-ceplan-login {
+/* =============================================
+   AUTH LAYOUT (Login, Welcome, Locked)
+   ============================================= */
+.auth-body {
     background: #e9ecef url('../images/background-login-alt.png') no-repeat center center fixed;
     background-size: cover;
+}
+
+.auth-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.auth-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
 }
 
 .header-ceplan {
@@ -42,41 +68,6 @@ html, body {
     justify-content: flex-end;
     padding: 0 2rem;
     border-bottom: 2px solid var(--ceplan-red-dark);
-}
-
-.rocket-icon {
-    width: 85px;
-    margin-bottom: 1.5rem;
-}
-
-.welcome-card {
-    text-align: center;
-}
-
-h4 {
-    font-weight: 700;
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-p {
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.btn-ceplan {
-    background-color: var(--ceplan-blue);
-    color: white !important;
-    font-weight: 500;
-    border-radius: 5px;
-    text-decoration: none;
-    display: block;
-    transition: background-color 0.2s;
-}
-
-.btn-ceplan:hover {
-    background-color: var(--ceplan-blue-hover);
 }
 
 .footer-ceplan {
@@ -94,18 +85,368 @@ p {
     height: 40px;
 }
 
-/*
-    LOGIN PAGE
-*/
+/* =============================================
+   DASHBOARD LAYOUT
+   ============================================= */
+.dashboard-body {
+    overflow: hidden;
+    height: 100vh;
+    background-color: #f4f7f6;
+}
+
+.dashboard-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* =============================================
+   SIDEBAR
+   ============================================= */
+.sidebar {
+    position: relative;
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1), min-width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+    min-width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .nav-item span,
+.sidebar.collapsed .nav-section {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.toggle-btn {
+    position: absolute;
+    right: -14px;
+    top: 82px;
+    width: 28px;
+    height: 28px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    color: #555;
+    font-size: 0.75rem;
+    transition: background 0.2s, color 0.2s;
+    padding: 0;
+}
+
+.toggle-btn:hover {
+    background: var(--ceplan-blue);
+    color: #fff;
+    border-color: var(--ceplan-blue);
+}
+
+.sidebar-header {
+    background-color: var(--ceplan-red);
+    height: var(--top-navbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.logo-img {
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 10px;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+}
+
+.nav-section {
+    font-size: 10px;
+    font-weight: 700;
+    color: #adb5bd;
+    letter-spacing: 1.2px;
+    padding: 16px 10px 6px 10px;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    color: #555;
+    text-decoration: none;
+    margin-bottom: 2px;
+    transition: background 0.18s, color 0.18s;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.nav-item i {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-item span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: opacity 0.2s, width 0.3s;
+    overflow: hidden;
+}
+
+.nav-item:hover {
+    background-color: #f0f4f8;
+    color: var(--ceplan-blue);
+    text-decoration: none;
+}
+
+.nav-item.active {
+    background-color: #eef3fb;
+    color: var(--ceplan-blue);
+    font-weight: 500;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 10px;
+    flex-shrink: 0;
+}
+
+.logout-item {
+    color: #dc3545 !important;
+}
+
+.logout-item:hover {
+    background-color: #fff5f5 !important;
+    color: #dc3545 !important;
+}
+
+/* =============================================
+   MAIN AREA
+   ============================================= */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.top-navbar {
+    height: var(--top-navbar-height);
+    background: var(--ceplan-red);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 28px;
+    border-bottom: 2px solid var(--ceplan-red-dark);
+    flex-shrink: 0;
+}
+
+.top-navbar-right {
+    display: flex;
+    gap: 6px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.notification-btn {
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    background: var(--ceplan-blue);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    border: 1px solid var(--ceplan-red);
+}
+
+.user-profile-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    margin-left: 6px;
+    padding-left: 16px;
+    transition: background 0.2s;
+}
+
+.user-profile-link:hover {
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.user-role {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+}
+
+.user-avatar {
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #f4f7f6;
+}
+
+/* =============================================
+   HOME
+   ============================================= */
+.welcome-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: calc(100vh - var(--top-navbar-height));
+    padding: 2rem;
+}
+
+.welcome-title {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #555;
+    text-align: center;
+}
+
+.welcome-name {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* =============================================
+   AUTH PAGES (Login, Welcome, etc.)
+   ============================================= */
+.login-card, .welcome-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-card{
+    text-align: center;
+}
 
 .support-card {
     background: white;
     border-radius: 12px;
+    width: 100%;
+    max-width: 440px;
     border: 1px solid #eee;
 }
 
-.cursor-pointer {
-    cursor: pointer;
+.rocket-icon {
+    width: 85px;
+    margin-bottom: 1.5rem;
+}
+
+.btn-ceplan {
+    background-color: var(--ceplan-blue);
+    color: white !important;
+    font-weight: 500;
+    border-radius: 5px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+}
+
+.btn-ceplan:hover {
+    background-color: var(--ceplan-blue-hover);
 }
 
 .nav-pills .nav-link {
@@ -130,32 +471,18 @@ p {
     border-color: #dee2e6;
 }
 
-.support-card {
-    background: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 440px;
-}
-
-/* COMPONENTS */
-.login-card, .welcome-card {
-    background: white;
-    border-radius: 12px;
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.support-card {
-    background: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid #eee;
-}
-
 .text-danger {
     color: var(--ceplan-red) !important;
     font-weight: 500;
+}
+
+/* =============================================
+   UTILITIES
+   ============================================= */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.very-small {
+    font-size: 11px;
 }
