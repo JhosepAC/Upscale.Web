@@ -23,6 +23,16 @@ html, body {
     background-size: cover;
 }
 
+.bg-ceplan-default {
+    background: #f0f0f0 url('../images/background-ceplan.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.bg-ceplan-login {
+    background: #e9ecef url('../images/background-login-alt.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
 .header-ceplan {
     background-color: var(--ceplan-red);
     height: var(--header-height);
@@ -34,19 +44,13 @@ html, body {
     border-bottom: 2px solid var(--ceplan-red-dark);
 }
 
-.welcome-card {
-    background: white;
-    border-radius: 8px;
-    padding: 3rem 2.5rem;
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
 .rocket-icon {
     width: 85px;
     margin-bottom: 1.5rem;
+}
+
+.welcome-card {
+    text-align: center;
 }
 
 h4 {
@@ -88,4 +92,70 @@ p {
 
 .footer-logos {
     height: 40px;
+}
+
+/*
+    LOGIN PAGE
+*/
+
+.support-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.nav-pills .nav-link {
+    color: var(--text-muted);
+    border: 1px solid #dee2e6;
+    background: white;
+    margin: 0 2px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #7a828a !important;
+    border-color: #7a828a;
+    color: white;
+}
+
+.input-group-text {
+    color: #adb5bd;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+.support-card {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 440px;
+}
+
+/* COMPONENTS */
+.login-card, .welcome-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.support-card {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #eee;
+}
+
+.text-danger {
+    color: var(--ceplan-red) !important;
+    font-weight: 500;
 }
