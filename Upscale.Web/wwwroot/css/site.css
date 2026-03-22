@@ -114,19 +114,19 @@ html, body {
     flex-shrink: 0;
 }
 
-    .sidebar.collapsed {
-        width: var(--sidebar-collapsed-width);
-        min-width: var(--sidebar-collapsed-width);
-    }
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+    min-width: var(--sidebar-collapsed-width);
+}
 
-        .sidebar.collapsed .nav-item span,
-        .sidebar.collapsed .nav-section {
-            opacity: 0;
-            pointer-events: none;
-            width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+.sidebar.collapsed .nav-item span,
+.sidebar.collapsed .nav-section {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 .toggle-btn {
     position: absolute;
@@ -149,11 +149,11 @@ html, body {
     padding: 0;
 }
 
-    .toggle-btn:hover {
-        background: var(--ceplan-blue);
-        color: #fff;
-        border-color: var(--ceplan-blue);
-    }
+.toggle-btn:hover {
+    background: var(--ceplan-blue);
+    color: #fff;
+    border-color: var(--ceplan-blue);
+}
 
 .sidebar-header {
     background-color: var(--ceplan-red);
@@ -185,14 +185,14 @@ html, body {
     padding: 8px 10px;
 }
 
-    .sidebar-nav::-webkit-scrollbar {
-        width: 4px;
-    }
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
 
-    .sidebar-nav::-webkit-scrollbar-thumb {
-        background: #ddd;
-        border-radius: 2px;
-    }
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+}
 
 .nav-section {
     font-size: 10px;
@@ -218,31 +218,31 @@ html, body {
     cursor: pointer;
 }
 
-    .nav-item i {
-        font-size: 1.05rem;
-        flex-shrink: 0;
-        width: 20px;
-        text-align: center;
-    }
+.nav-item i {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+}
 
-    .nav-item span {
-        font-size: 0.9rem;
-        font-weight: 400;
-        transition: opacity 0.2s, width 0.3s;
-        overflow: hidden;
-    }
+.nav-item span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: opacity 0.2s, width 0.3s;
+    overflow: hidden;
+}
 
-    .nav-item:hover {
-        background-color: #f0f4f8;
-        color: var(--ceplan-blue);
-        text-decoration: none;
-    }
+.nav-item:hover {
+    background-color: #f0f4f8;
+    color: var(--ceplan-blue);
+    text-decoration: none;
+}
 
-    .nav-item.active {
-        background-color: #eef3fb;
-        color: var(--ceplan-blue);
-        font-weight: 500;
-    }
+.nav-item.active {
+    background-color: #eef3fb;
+    color: var(--ceplan-blue);
+    font-weight: 500;
+}
 
 .sidebar-footer {
     border-top: 1px solid #f0f0f0;
@@ -254,10 +254,10 @@ html, body {
     color: #dc3545 !important;
 }
 
-    .logout-item:hover {
-        background-color: #fff5f5 !important;
-        color: #dc3545 !important;
-    }
+.logout-item:hover {
+    background-color: #fff5f5 !important;
+    color: #dc3545 !important;
+}
 
 /* =============================================
    MAIN AREA
@@ -303,10 +303,10 @@ html, body {
     justify-content: center;
 }
 
-    .icon-btn:hover {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.12);
-    }
+.icon-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
 
 .notification-btn {
     position: relative;
@@ -342,10 +342,10 @@ html, body {
     transition: background 0.2s;
 }
 
-    .user-profile-link:hover {
-        background: rgba(255, 255, 255, 0.12);
-        text-decoration: none;
-    }
+.user-profile-link:hover {
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+}
 
 .user-info {
     text-align: right;
@@ -372,14 +372,13 @@ html, body {
     align-items: center;
 }
 
-/* main-content: scroll interno, ocupa todo el espacio */
 .main-content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     background: #f4f7f6;
     display: flex;
-    flex-direction: column; /* para que el footer quede al fondo */
+    flex-direction: column;
 }
 
 /* =============================================
@@ -444,9 +443,9 @@ html, body {
     transition: background-color 0.2s;
 }
 
-    .btn-ceplan:hover {
-        background-color: var(--ceplan-blue-hover);
-    }
+.btn-ceplan:hover {
+    background-color: var(--ceplan-blue-hover);
+}
 
 .nav-pills .nav-link {
     color: var(--text-muted);
@@ -455,11 +454,11 @@ html, body {
     margin: 0 2px;
 }
 
-    .nav-pills .nav-link.active {
-        background-color: #7a828a !important;
-        border-color: #7a828a;
-        color: white;
-    }
+.nav-pills .nav-link.active {
+    background-color: #7a828a !important;
+    border-color: #7a828a;
+    color: white;
+}
 
 .input-group-text {
     color: #adb5bd;
@@ -489,11 +488,9 @@ html, body {
 /* =============================================
    PROFILE PAGE
    ============================================= */
-
-/* Envuelve toda la página de perfil (sin max-width, ocupa todo) */
 .profile-page {
     padding: 28px 36px 24px;
-    flex: 1; /* ocupa el espacio restante dentro de main-content */
+    flex: 1;
 }
 
 .profile-breadcrumb {
@@ -509,7 +506,6 @@ html, body {
     margin: 0 0 20px;
 }
 
-/* ── Alertas ── */
 .profile-alert {
     display: flex;
     align-items: center;
@@ -533,7 +529,6 @@ html, body {
     border: 1px solid #ffcdd2;
 }
 
-/* ── Card ── */
 .profile-card {
     background: #ffffff;
     border-radius: 10px;
@@ -542,7 +537,6 @@ html, body {
     width: 100%;
 }
 
-/* ── Encabezado card ── */
 .profile-card-header {
     display: flex;
     align-items: flex-start;
@@ -613,7 +607,6 @@ html, body {
     color: var(--text-muted);
 }
 
-/* ── Tabs ── */
 .profile-tabs {
     display: flex;
     border-bottom: 1px solid #e0e0e0;
@@ -635,17 +628,16 @@ html, body {
     font-family: var(--font-family);
 }
 
-    .profile-tab:hover {
-        color: var(--text-primary);
-    }
+.profile-tab:hover {
+    color: var(--text-primary);
+}
 
-    .profile-tab.active {
-        color: var(--ceplan-blue);
-        border-bottom-color: var(--ceplan-blue);
-        font-weight: 500;
-    }
+.profile-tab.active {
+    color: var(--ceplan-blue);
+    border-bottom-color: var(--ceplan-blue);
+    font-weight: 500;
+}
 
-/* ── Paneles ── */
 .profile-tab-content {
     display: none;
     padding: 28px 32px 32px;
@@ -655,7 +647,6 @@ html, body {
         display: block;
     }
 
-/* ── Grilla de campos: 3 columnas, ancho completo ── */
 .profile-fields-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -681,7 +672,6 @@ html, body {
     margin-left: 3px;
 }
 
-/* Campos readonly */
 .field-value {
     font-size: 0.88rem;
     color: var(--text-primary);
@@ -694,7 +684,6 @@ html, body {
     align-items: center;
 }
 
-/* Campos editables (input) */
 .field-input-wrap {
     padding: 0;
     background: #ffffff;
@@ -712,16 +701,11 @@ html, body {
     padding: 9px 12px;
 }
 
-    .field-input:focus {
-        outline: none;
-    }
-
 .field-input-wrap:focus-within {
     border-color: var(--ceplan-blue);
     box-shadow: 0 0 0 2px rgba(0, 85, 171, 0.1);
 }
 
-/* Estado de error en campo */
 .field-group--error .field-input-wrap {
     border-color: var(--ceplan-red);
 }
@@ -732,7 +716,6 @@ html, body {
     margin-top: 2px;
 }
 
-/* ── Fila del botón guardar ── */
 .profile-save-row {
     display: flex;
     justify-content: flex-end;
@@ -757,15 +740,10 @@ html, body {
     transition: background-color 0.2s;
 }
 
-    .btn-save:hover {
-        background-color: var(--ceplan-blue-hover);
-    }
+.btn-save:hover {
+    background-color: var(--ceplan-blue-hover);
+}
 
-    .btn-save i {
-        font-size: 0.9rem;
-    }
-
-/* ── Estado vacío ── */
 .tab-empty-state {
     display: flex;
     flex-direction: column;
@@ -786,14 +764,123 @@ html, body {
     margin: 0;
 }
 
-/* ── Footer dentro del scroll del perfil ── */
 .profile-footer {
-    /* Reutiliza .footer-ceplan, solo ajustamos posición */
     position: relative;
     flex-shrink: 0;
 }
 
-/* ── Responsive ── */
+/* =============================================
+   MODAL DE EXPIRACIÓN DE SESIÓN
+   ============================================= */
+
+.session-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.session-overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.session-modal {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    padding: 32px 36px;
+    max-width: 540px;
+    width: calc(100% - 40px);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    animation: modalSlideIn 0.25s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-16px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.session-modal__icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #FEF3C7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #D97706;
+    font-size: 1.4rem;
+    margin-top: 2px;
+}
+
+.session-modal__body {
+    flex: 1;
+}
+
+.session-modal__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.session-modal__desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.session-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 4px;
+}
+
+.btn-extend-session {
+    background: #D97706;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+    .btn-extend-session:hover {
+        background: #B45309;
+    }
+
+    .btn-extend-session:focus {
+        outline: 2px solid #D97706;
+        outline-offset: 2px;
+    }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
 @media (max-width: 1024px) {
     .profile-fields-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -822,5 +909,16 @@ html, body {
 
     .profile-tab-content {
         padding: 20px 16px 24px;
+    }
+
+    .session-modal {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 28px 24px;
+    }
+
+    .session-modal__actions {
+        justify-content: center;
     }
 }

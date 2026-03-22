@@ -14,7 +14,6 @@
     {
         <div class="dashboard-wrapper">
 
-            <!-- SIDEBAR -->
             <aside class="sidebar" id="sidebar">
                 <button class="toggle-btn" id="toggleBtn" title="Expandir/Colapsar menú" aria-label="Alternar menú">
                     <i class="fa-solid fa-chevron-left" id="toggleIcon"></i>
@@ -59,7 +58,7 @@
                 </nav>
 
                 <div class="sidebar-footer">
-                    <form asp-controller="Account" asp-action="Logout" method="post">
+                    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="nav-item logout-item w-100 border-0 bg-transparent text-start" title="Cerrar sesión">
                             <i class="fa-solid fa-right-from-bracket"></i>
@@ -69,7 +68,6 @@
                 </div>
             </aside>
 
-            <!-- MAIN AREA -->
             <div class="main-area">
 
                 <header class="top-navbar">
@@ -101,6 +99,38 @@
 
             </div>
         </div>
+
+        <div id="sessionOverlay"
+             class="session-overlay"
+             role="dialog"
+             aria-hidden="true"
+             aria-labelledby="sessionModalTitle"
+             aria-modal="true">
+            <div class="session-modal">
+
+                <div class="session-modal__icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div class="session-modal__body">
+                    <p class="session-modal__title" id="sessionModalTitle">
+                        Su sesión esta a punto de expirar
+                    </p>
+                    <p class="session-modal__desc">
+                        Por seguridad, su sesión expirará en
+                        <span id="sessionCountdown">60</span> segundos.
+                        Para continuar, seleccione "Extender sesión"
+                    </p>
+                </div>
+
+                <div class="session-modal__actions">
+                    <button type="button" id="btnExtendSession" class="btn-extend-session">
+                        Extender sesión
+                    </button>
+                </div>
+
+            </div>
+        </div>
     }
     else
     {
@@ -127,27 +157,99 @@
     {
         <script>
                 (function () {
-                    const sidebar = document.getElementById('sidebar');
-                    const toggleBtn = document.getElementById('toggleBtn');
+                    const sidebar    = document.getElementById('sidebar');
+                    const toggleBtn  = document.getElementById('toggleBtn');
                     const toggleIcon = document.getElementById('toggleIcon');
-                    const COLLAPSED_KEY = 'sidebar_collapsed';
+                    const KEY        = 'sidebar_collapsed';
 
-                    // Restaurar estado guardado
-                    if (localStorage.getItem(COLLAPSED_KEY) === 'true') {
+                    if (localStorage.getItem(KEY) === 'true') {
                         sidebar.classList.add('collapsed');
                         toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
                     }
 
                     toggleBtn.addEventListener('click', function () {
-                        const isCollapsed = sidebar.classList.toggle('collapsed');
-                        localStorage.setItem(COLLAPSED_KEY, isCollapsed);
-
-                        if (isCollapsed) {
-                            toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
-                        } else {
-                            toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left');
-                        }
+                        const collapsed = sidebar.classList.toggle('collapsed');
+                        localStorage.setItem(KEY, collapsed);
+                        toggleIcon.classList.replace(
+                            collapsed ? 'fa-chevron-left'  : 'fa-chevron-right',
+                            collapsed ? 'fa-chevron-right' : 'fa-chevron-left'
+                        );
                     });
+                })();
+
+                (function () {
+
+                    const IDLE_TIMEOUT_MS  = 60 * 1000;
+                    const WARN_COUNTDOWN_S = 60;
+
+                    const overlay    = document.getElementById('sessionOverlay');
+                    const countdownEl = document.getElementById('sessionCountdown');
+                    const btnExtend  = document.getElementById('btnExtendSession');
+                    const logoutForm = document.getElementById('logoutForm');
+
+                    let idleTimer    = null;
+                    let warnInterval = null;
+                    let modalOpen    = false;
+
+                    function openModal() {
+                        if (modalOpen) return;
+                        modalOpen = true;
+
+                        let remaining = WARN_COUNTDOWN_S;
+                        countdownEl.textContent = remaining;
+
+                        overlay.classList.add('session-overlay--visible');
+                        overlay.setAttribute('aria-hidden', 'false');
+                        btnExtend.focus();
+
+                        warnInterval = setInterval(function () {
+                            remaining -= 1;
+                            countdownEl.textContent = remaining;
+
+                            if (remaining <= 0) {
+                                clearInterval(warnInterval);
+                                logoutForm.submit();
+                            }
+                        }, 1000);
+                    }
+
+                    function closeModalAndExtend() {
+                        if (!modalOpen) return;
+                        modalOpen = false;
+
+                        clearInterval(warnInterval);
+                        overlay.classList.remove('session-overlay--visible');
+                        overlay.setAttribute('aria-hidden', 'true');
+
+                        var token = (document.querySelector('input[name="__RequestVerificationToken"]') || {}).value || '';
+                        fetch('/Account/ExtendSession', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'RequestVerificationToken': token
+                            }
+                        }).catch(function () { });
+                    }
+
+                    function resetIdleTimer() {
+                        if (modalOpen) return;
+                        clearTimeout(idleTimer);
+                        idleTimer = setTimeout(openModal, IDLE_TIMEOUT_MS);
+                    }
+
+                    ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click']
+                        .forEach(function (evt) {
+                            document.addEventListener(evt, resetIdleTimer, { passive: true });
+                        });
+
+                    btnExtend.addEventListener('click', function () {
+                        closeModalAndExtend();
+                        resetIdleTimer();
+                    });
+
+                    resetIdleTimer();
+
                 })();
         </script>
     }

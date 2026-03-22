@@ -21,10 +21,6 @@ namespace Upscale.Web.Controllers
             _context = context;
         }
 
-        // ──────────────────────────────────────────────────────────
-        //  PÚBLICAS
-        // ──────────────────────────────────────────────────────────
-
         [HttpGet]
         public IActionResult Welcome() => View();
 
@@ -108,10 +104,6 @@ namespace Upscale.Web.Controllers
             return View();
         }
 
-        // ──────────────────────────────────────────────────────────
-        //  PROTEGIDAS
-        // ──────────────────────────────────────────────────────────
-
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Profile()
@@ -134,9 +126,13 @@ namespace Upscale.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Profile(ProfileViewModel model)
         {
-            // Solo validamos los campos editables
-            var editableFields = new[] { nameof(model.Email), nameof(model.SecondaryEmail),
-                                         nameof(model.MobilePhone), nameof(model.SecondaryPhone) };
+            var editableFields = new[]
+            {
+                nameof(model.Email),
+                nameof(model.SecondaryEmail),
+                nameof(model.MobilePhone),
+                nameof(model.SecondaryPhone)
+            };
 
             foreach (var key in ModelState.Keys
                      .Where(k => !editableFields.Contains(k)))
@@ -154,7 +150,6 @@ namespace Upscale.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                // Recargar campos de solo lectura antes de devolver la vista
                 var fresh = MapToViewModel(user);
                 model.FirstName = fresh.FirstName;
                 model.FirstLastName = fresh.FirstLastName;
@@ -172,10 +167,8 @@ namespace Upscale.Web.Controllers
                 return View(model);
             }
 
-            // Actualizar campos editables en User
             user.Email = model.Email?.Trim() ?? user.Email;
 
-            // Actualizar campos editables en UserProfile
             if (user.Profile != null)
             {
                 user.Profile.SecondaryEmail = model.SecondaryEmail?.Trim();
@@ -189,9 +182,22 @@ namespace Upscale.Web.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
-        // ──────────────────────────────────────────────────────────
-        //  HELPERS PRIVADOS
-        // ──────────────────────────────────────────────────────────
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExtendSession()
+        {
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                HttpContext.User,
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+                });
+
+            return Ok(new { extended = true });
+        }
 
         private static ProfileViewModel MapToViewModel(Upscale.Web.Models.Entities.User user)
         {
