@@ -1,0 +1,223 @@
+﻿@model Upscale.Web.Models.ViewModels.ProfileViewModel
+@{
+    ViewData["Title"] = "Perfil de usuario";
+}
+
+<div class="profile-page">
+
+    <!-- Breadcrumb -->
+    <nav class="profile-breadcrumb" aria-label="breadcrumb">
+        <span>Perfil de usuario</span>
+    </nav>
+
+    <h1 class="profile-heading">Perfíl de usuario</h1>
+
+    <!-- Alerta de éxito -->
+    @if (TempData["ProfileSuccess"] != null)
+    {
+        <div class="profile-alert profile-alert--success" role="alert">
+            <i class="fa-solid fa-circle-check"></i>
+            @TempData["ProfileSuccess"]
+        </div>
+    }
+
+    <!-- Alerta de errores de validación -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="profile-alert profile-alert--error" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            Por favor, revisa los campos marcados antes de guardar.
+        </div>
+    }
+
+    <form asp-controller="Account" asp-action="Profile" method="post" novalidate>
+        @Html.AntiForgeryToken()
+
+        <div class="profile-card">
+
+            <!-- ── Encabezado ── -->
+            <div class="profile-card-header">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="profile-identity">
+                    <div class="profile-fullname-row">
+                        <span class="profile-fullname">@Model.FullName</span>
+                        <span class="profile-status-badge @(Model.IsActive ? "badge-active" : "badge-inactive")">
+                            @Model.StatusLabel
+                        </span>
+                    </div>
+                    <div class="profile-jobtitle">@Model.JobTitle</div>
+                    <div class="profile-org">@Model.Organization</div>
+                </div>
+            </div>
+
+            <!-- ── Tabs ── -->
+            <div class="profile-tabs">
+                <button type="button" class="profile-tab active" data-tab="basic">Información básica</button>
+                <button type="button" class="profile-tab" data-tab="responsibilities">Responsabilidades</button>
+                <button type="button" class="profile-tab" data-tab="history">Historial de responsabilidades</button>
+            </div>
+
+            <!-- ══ TAB: Información básica ══ -->
+            <div class="profile-tab-content active" id="tab-basic">
+                <div class="profile-fields-grid">
+
+                    <div class="field-group">
+                        <label class="field-label">Nombres</label>
+                        <div class="field-value">@Model.FirstName</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Primer Apellido</label>
+                        <div class="field-value">@Model.FirstLastName</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Segundo Apellido</label>
+                        <div class="field-value">@Model.SecondLastName</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Tipo de Documento de Identidad</label>
+                        <div class="field-value">@Model.DocumentType</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">N° de Documento de Identidad</label>
+                        <div class="field-value">@Model.DocumentNumber</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Fecha de nacimiento</label>
+                        <div class="field-value">@Model.BirthDateFormatted</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Nacionalidad</label>
+                        <div class="field-value">@Model.Nationality</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Sexo</label>
+                        <div class="field-value">@Model.Gender</div>
+                    </div>
+
+                    <!-- Correo principal (editable) -->
+                    <div class="field-group @(ViewData.ModelState["Email"]?.Errors.Count > 0 ? "field-group--error" : "")">
+                        <label class="field-label" for="Email">Correo electrónico principal</label>
+                        <div class="field-value field-input-wrap">
+                            <input asp-for="Email" type="email" class="field-input" id="Email" placeholder="correo@ejemplo.pe" />
+                        </div>
+                        <span asp-validation-for="Email" class="field-error-msg"></span>
+                    </div>
+
+                    <!-- Correo secundario (editable, opcional) -->
+                    <div class="field-group @(ViewData.ModelState["SecondaryEmail"]?.Errors.Count > 0 ? "field-group--error" : "")">
+                        <label class="field-label" for="SecondaryEmail">
+                            Correo electrónico secundario
+                            <span class="field-optional">(Opcional)</span>
+                        </label>
+                        <div class="field-value field-input-wrap">
+                            <input asp-for="SecondaryEmail" type="email" class="field-input" id="SecondaryEmail" />
+                        </div>
+                        <span asp-validation-for="SecondaryEmail" class="field-error-msg"></span>
+                    </div>
+
+                    <!-- Teléfono móvil (editable) -->
+                    <div class="field-group @(ViewData.ModelState["MobilePhone"]?.Errors.Count > 0 ? "field-group--error" : "")">
+                        <label class="field-label" for="MobilePhone">Teléfono Móvil</label>
+                        <div class="field-value field-input-wrap">
+                            <input asp-for="MobilePhone" type="tel" class="field-input" id="MobilePhone" placeholder="+51 999 999 999" />
+                        </div>
+                        <span asp-validation-for="MobilePhone" class="field-error-msg"></span>
+                    </div>
+
+                    <!-- Teléfono secundario (editable, opcional) -->
+                    <div class="field-group @(ViewData.ModelState["SecondaryPhone"]?.Errors.Count > 0 ? "field-group--error" : "")">
+                        <label class="field-label" for="SecondaryPhone">
+                            Teléfono secundario
+                            <span class="field-optional">(Opcional)</span>
+                        </label>
+                        <div class="field-value field-input-wrap">
+                            <input asp-for="SecondaryPhone" type="tel" class="field-input" id="SecondaryPhone" />
+                        </div>
+                        <span asp-validation-for="SecondaryPhone" class="field-error-msg"></span>
+                    </div>
+
+                    <!-- Tipo de Contratación (readonly) -->
+                    <div class="field-group">
+                        <label class="field-label">Tipo de Contratación</label>
+                        <div class="field-value">@Model.ContractType</div>
+                    </div>
+
+                    <!-- Fecha de contratación (readonly) -->
+                    <div class="field-group">
+                        <label class="field-label">Fecha de contratación</label>
+                        <div class="field-value">@Model.HireDateFormatted</div>
+                    </div>
+
+                </div><!-- /profile-fields-grid -->
+                <!-- Botón guardar -->
+                <div class="profile-save-row">
+                    <button type="submit" class="btn-save">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Guardar datos
+                    </button>
+                </div>
+
+            </div><!-- /tab-basic -->
+            <!-- ══ TAB: Responsabilidades ══ -->
+            <div class="profile-tab-content" id="tab-responsibilities">
+                <div class="tab-empty-state">
+                    <i class="fa-solid fa-briefcase tab-empty-icon"></i>
+                    <p class="tab-empty-text">Sin actividad</p>
+                </div>
+            </div>
+
+            <!-- ══ TAB: Historial de responsabilidades ══ -->
+            <div class="profile-tab-content" id="tab-history">
+                <div class="tab-empty-state">
+                    <i class="fa-solid fa-clock-rotate-left tab-empty-icon"></i>
+                    <p class="tab-empty-text">Sin actividad</p>
+                </div>
+            </div>
+
+        </div><!-- /profile-card -->
+
+    </form>
+
+</div><!-- /profile-page -->
+<!-- Footer institucional estándar -->
+<footer class="footer-ceplan profile-footer">
+    <img src="~/images/logos-footer.png" alt="Logos institucionales" class="footer-logos" />
+</footer>
+
+@section Scripts {
+    <script>
+        (function () {
+            // Tab switcher
+            const tabs   = document.querySelectorAll('.profile-tab');
+            const panels = document.querySelectorAll('.profile-tab-content');
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    const target = tab.dataset.tab;
+                    tabs.forEach(function (t)   { t.classList.remove('active'); });
+                    panels.forEach(function (p) { p.classList.remove('active'); });
+                    tab.classList.add('active');
+                    document.getElementById('tab-' + target).classList.add('active');
+                });
+            });
+
+            // Auto-dismiss alertas tras 4 s
+            document.querySelectorAll('.profile-alert').forEach(function (el) {
+                setTimeout(function () {
+                    el.style.transition = 'opacity 0.4s';
+                    el.style.opacity    = '0';
+                    setTimeout(function () { el.remove(); }, 400);
+                }, 4000);
+            });
+        })();
+    </script>
+}

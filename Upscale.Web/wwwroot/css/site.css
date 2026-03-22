@@ -1,19 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 /* =============================================
    CSS VARIABLES
    ============================================= */
 :root {
     --font-family: 'Roboto', sans-serif;
-    /* CEPLAN */
     --ceplan-red: #A32D2F;
     --ceplan-red-dark: #8B2527;
     --ceplan-blue: #0055AB;
     --ceplan-blue-hover: #004489;
-    /* Text */
     --text-primary: #333333;
     --text-muted: #666666;
-    /* Layout */
     --header-height: 55px;
     --footer-height: 65px;
     --sidebar-width: 260px;
@@ -38,7 +35,7 @@ html, body {
 }
 
 /* =============================================
-   AUTH LAYOUT (Login, Welcome, Locked)
+   AUTH LAYOUT
    ============================================= */
 .auth-body {
     background: #e9ecef url('../images/background-login-alt.png') no-repeat center center fixed;
@@ -117,19 +114,19 @@ html, body {
     flex-shrink: 0;
 }
 
-.sidebar.collapsed {
-    width: var(--sidebar-collapsed-width);
-    min-width: var(--sidebar-collapsed-width);
-}
+    .sidebar.collapsed {
+        width: var(--sidebar-collapsed-width);
+        min-width: var(--sidebar-collapsed-width);
+    }
 
-.sidebar.collapsed .nav-item span,
-.sidebar.collapsed .nav-section {
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-}
+        .sidebar.collapsed .nav-item span,
+        .sidebar.collapsed .nav-section {
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
 
 .toggle-btn {
     position: absolute;
@@ -152,11 +149,11 @@ html, body {
     padding: 0;
 }
 
-.toggle-btn:hover {
-    background: var(--ceplan-blue);
-    color: #fff;
-    border-color: var(--ceplan-blue);
-}
+    .toggle-btn:hover {
+        background: var(--ceplan-blue);
+        color: #fff;
+        border-color: var(--ceplan-blue);
+    }
 
 .sidebar-header {
     background-color: var(--ceplan-red);
@@ -188,14 +185,14 @@ html, body {
     padding: 8px 10px;
 }
 
-.sidebar-nav::-webkit-scrollbar {
-    width: 4px;
-}
+    .sidebar-nav::-webkit-scrollbar {
+        width: 4px;
+    }
 
-.sidebar-nav::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 2px;
-}
+    .sidebar-nav::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 2px;
+    }
 
 .nav-section {
     font-size: 10px;
@@ -221,31 +218,31 @@ html, body {
     cursor: pointer;
 }
 
-.nav-item i {
-    font-size: 1.05rem;
-    flex-shrink: 0;
-    width: 20px;
-    text-align: center;
-}
+    .nav-item i {
+        font-size: 1.05rem;
+        flex-shrink: 0;
+        width: 20px;
+        text-align: center;
+    }
 
-.nav-item span {
-    font-size: 0.9rem;
-    font-weight: 400;
-    transition: opacity 0.2s, width 0.3s;
-    overflow: hidden;
-}
+    .nav-item span {
+        font-size: 0.9rem;
+        font-weight: 400;
+        transition: opacity 0.2s, width 0.3s;
+        overflow: hidden;
+    }
 
-.nav-item:hover {
-    background-color: #f0f4f8;
-    color: var(--ceplan-blue);
-    text-decoration: none;
-}
+    .nav-item:hover {
+        background-color: #f0f4f8;
+        color: var(--ceplan-blue);
+        text-decoration: none;
+    }
 
-.nav-item.active {
-    background-color: #eef3fb;
-    color: var(--ceplan-blue);
-    font-weight: 500;
-}
+    .nav-item.active {
+        background-color: #eef3fb;
+        color: var(--ceplan-blue);
+        font-weight: 500;
+    }
 
 .sidebar-footer {
     border-top: 1px solid #f0f0f0;
@@ -257,10 +254,10 @@ html, body {
     color: #dc3545 !important;
 }
 
-.logout-item:hover {
-    background-color: #fff5f5 !important;
-    color: #dc3545 !important;
-}
+    .logout-item:hover {
+        background-color: #fff5f5 !important;
+        color: #dc3545 !important;
+    }
 
 /* =============================================
    MAIN AREA
@@ -287,6 +284,7 @@ html, body {
 
 .top-navbar-right {
     display: flex;
+    align-items: center;
     gap: 6px;
 }
 
@@ -305,10 +303,10 @@ html, body {
     justify-content: center;
 }
 
-.icon-btn:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.12);
-}
+    .icon-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.12);
+    }
 
 .notification-btn {
     position: relative;
@@ -337,18 +335,17 @@ html, body {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    padding: 6px 10px;
+    padding: 6px 16px;
     border-radius: 8px;
     border-left: 1px solid rgba(255, 255, 255, 0.3);
     margin-left: 6px;
-    padding-left: 16px;
     transition: background 0.2s;
 }
 
-.user-profile-link:hover {
-    background: rgba(255, 255, 255, 0.12);
-    text-decoration: none;
-}
+    .user-profile-link:hover {
+        background: rgba(255, 255, 255, 0.12);
+        text-decoration: none;
+    }
 
 .user-info {
     text-align: right;
@@ -375,22 +372,24 @@ html, body {
     align-items: center;
 }
 
+/* main-content: scroll interno, ocupa todo el espacio */
 .main-content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     background: #f4f7f6;
+    display: flex;
+    flex-direction: column; /* para que el footer quede al fondo */
 }
 
 /* =============================================
-   HOME
+   HOME — BIENVENIDA
    ============================================= */
 .welcome-center {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    min-height: calc(100vh - var(--top-navbar-height));
+    flex: 1;
     padding: 2rem;
 }
 
@@ -407,7 +406,7 @@ html, body {
 }
 
 /* =============================================
-   AUTH PAGES (Login, Welcome, etc.)
+   AUTH PAGES
    ============================================= */
 .login-card, .welcome-card {
     background: white;
@@ -418,7 +417,7 @@ html, body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.welcome-card{
+.welcome-card {
     text-align: center;
 }
 
@@ -445,9 +444,9 @@ html, body {
     transition: background-color 0.2s;
 }
 
-.btn-ceplan:hover {
-    background-color: var(--ceplan-blue-hover);
-}
+    .btn-ceplan:hover {
+        background-color: var(--ceplan-blue-hover);
+    }
 
 .nav-pills .nav-link {
     color: var(--text-muted);
@@ -456,11 +455,11 @@ html, body {
     margin: 0 2px;
 }
 
-.nav-pills .nav-link.active {
-    background-color: #7a828a !important;
-    border-color: #7a828a;
-    color: white;
-}
+    .nav-pills .nav-link.active {
+        background-color: #7a828a !important;
+        border-color: #7a828a;
+        color: white;
+    }
 
 .input-group-text {
     color: #adb5bd;
@@ -485,4 +484,343 @@ html, body {
 
 .very-small {
     font-size: 11px;
+}
+
+/* =============================================
+   PROFILE PAGE
+   ============================================= */
+
+/* Envuelve toda la página de perfil (sin max-width, ocupa todo) */
+.profile-page {
+    padding: 28px 36px 24px;
+    flex: 1; /* ocupa el espacio restante dentro de main-content */
+}
+
+.profile-breadcrumb {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.profile-heading {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 20px;
+}
+
+/* ── Alertas ── */
+.profile-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 7px;
+    font-size: 0.88rem;
+    margin-bottom: 18px;
+    font-weight: 500;
+}
+
+.profile-alert--success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.profile-alert--error {
+    background: #fce4e4;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* ── Card ── */
+.profile-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    width: 100%;
+}
+
+/* ── Encabezado card ── */
+.profile-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 32px 20px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 50%;
+    background: #d6dce6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8a9ab5;
+    font-size: 2.2rem;
+}
+
+.profile-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 6px;
+}
+
+.profile-fullname-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.profile-fullname {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.profile-status-badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+}
+
+.badge-active {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-color: #c8e6c9;
+}
+
+.badge-inactive {
+    background: #fce4e4;
+    color: #c62828;
+    border-color: #ffcdd2;
+}
+
+.profile-jobtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.profile-org {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* ── Tabs ── */
+.profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 32px;
+}
+
+.profile-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    margin-bottom: -1px;
+    font-family: var(--font-family);
+}
+
+    .profile-tab:hover {
+        color: var(--text-primary);
+    }
+
+    .profile-tab.active {
+        color: var(--ceplan-blue);
+        border-bottom-color: var(--ceplan-blue);
+        font-weight: 500;
+    }
+
+/* ── Paneles ── */
+.profile-tab-content {
+    display: none;
+    padding: 28px 32px 32px;
+}
+
+    .profile-tab-content.active {
+        display: block;
+    }
+
+/* ── Grilla de campos: 3 columnas, ancho completo ── */
+.profile-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 28px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field-label {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.field-optional {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: 3px;
+}
+
+/* Campos readonly */
+.field-value {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    background: #f5f6f7;
+    border: 1px solid #e8e9ea;
+    border-radius: 5px;
+    padding: 9px 12px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+}
+
+/* Campos editables (input) */
+.field-input-wrap {
+    padding: 0;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+}
+
+.field-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    padding: 9px 12px;
+}
+
+    .field-input:focus {
+        outline: none;
+    }
+
+.field-input-wrap:focus-within {
+    border-color: var(--ceplan-blue);
+    box-shadow: 0 0 0 2px rgba(0, 85, 171, 0.1);
+}
+
+/* Estado de error en campo */
+.field-group--error .field-input-wrap {
+    border-color: var(--ceplan-red);
+}
+
+.field-error-msg {
+    font-size: 0.75rem;
+    color: var(--ceplan-red);
+    margin-top: 2px;
+}
+
+/* ── Fila del botón guardar ── */
+.profile-save-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--ceplan-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .btn-save:hover {
+        background-color: var(--ceplan-blue-hover);
+    }
+
+    .btn-save i {
+        font-size: 0.9rem;
+    }
+
+/* ── Estado vacío ── */
+.tab-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    gap: 14px;
+}
+
+.tab-empty-icon {
+    font-size: 2.8rem;
+    color: #c5cdd6;
+}
+
+.tab-empty-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ── Footer dentro del scroll del perfil ── */
+.profile-footer {
+    /* Reutiliza .footer-ceplan, solo ajustamos posición */
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .profile-fields-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .profile-fields-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-page {
+        padding: 20px 16px 20px;
+    }
+
+    .profile-card-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-tabs {
+        overflow-x: auto;
+        padding: 0 16px;
+    }
+
+    .profile-tab-content {
+        padding: 20px 16px 24px;
+    }
 }
