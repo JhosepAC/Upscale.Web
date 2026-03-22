@@ -1,4 +1,8 @@
-﻿@model Upscale.Web.Models.ViewModels.LoginViewModel
+﻿@{
+    ViewData["Title"] = "Iniciar Sesión";
+    ViewData["BodyClass"] = "bg-login";
+}
+@model Upscale.Web.Models.ViewModels.LoginViewModel
 
 <div class="d-flex flex-column align-items-center">
     <div class="login-card shadow-sm">
@@ -49,7 +53,4 @@
 
 @section Scripts {
     <script src="~/js/login.js"></script>
-    <script>
-        document.body.className = 'bg-ceplan-login d-flex flex-column min-vh-100';
-    </script>
 }

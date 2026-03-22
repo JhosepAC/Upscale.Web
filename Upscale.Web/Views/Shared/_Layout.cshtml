@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
-<body class="@(User.Identity.IsAuthenticated ? "dashboard-body" : "auth-body")">
-
+<body class="@(User.Identity.IsAuthenticated ? "dashboard-body" : (ViewData["BodyClass"] ?? "auth-body"))">
     @if (User.Identity.IsAuthenticated)
     {
         <div class="dashboard-wrapper">

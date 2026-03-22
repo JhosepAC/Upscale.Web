@@ -38,8 +38,7 @@ html, body {
    AUTH LAYOUT
    ============================================= */
 .auth-body {
-    background: #e9ecef url('../images/background-login-alt.png') no-repeat center center fixed;
-    background-size: cover;
+    background-color: #e9ecef;
 }
 
 .auth-wrapper {
@@ -54,8 +53,18 @@ html, body {
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
 }
 
+.bg-welcome .auth-main {
+    background: #f0f0f0 url('../images/background-ceplan.png') no-repeat;
+}
+
+.bg-login .auth-main {
+    background: #e9ecef url('../images/background-login-alt.png') no-repeat;
+}
 .header-ceplan {
     background-color: var(--ceplan-red);
     height: var(--header-height);
