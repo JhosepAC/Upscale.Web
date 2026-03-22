@@ -22,10 +22,24 @@ namespace Upscale.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Welcome() => View();
+        public IActionResult Welcome()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
 
         [HttpGet]
-        public IActionResult Login() => View();
+        public IActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
