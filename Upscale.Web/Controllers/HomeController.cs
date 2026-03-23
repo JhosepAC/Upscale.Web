@@ -6,8 +6,8 @@ using Upscale.Web.Models;
 namespace Upscale.Web.Controllers
 {
     /// <summary>
-    /// Handles the main landing pages and global application states like errors.
-    /// Base authorization is required for all actions except where specified.
+    /// Handles the main landing pages and global application states like errors
+    /// Base authorization is required for all actions except where specified
     /// </summary>
     [Authorize]
     public class HomeController : Controller

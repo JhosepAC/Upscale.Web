@@ -20,7 +20,7 @@ namespace Upscale.Web.Models.ViewModels
         public string SecondLastName { get; set; }
 
         /// <summary>
-        /// Type of identity document (e.g., DNI, CE).
+        /// Type of identity document
         /// </summary>
         public string DocumentType { get; set; }
 

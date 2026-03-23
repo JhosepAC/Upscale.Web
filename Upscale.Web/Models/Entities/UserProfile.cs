@@ -13,7 +13,7 @@ namespace Upscale.Web.Models.Entities
         public int ProfileId { get; set; }
 
         /// <summary>
-        /// Foreign key reference to the parent User account.
+        /// Foreign key reference to the parent User account
         /// </summary>
         [ForeignKey("User")]
         public int UserId { get; set; }
@@ -33,7 +33,7 @@ namespace Upscale.Web.Models.Entities
         public string SecondLastName { get; set; }
 
         /// <summary>
-        /// Type of identification document (e.g., DNI, CE, Passport).
+        /// Type of identification document (DNI, CE)
         /// </summary>
         [Required]
         [MaxLength(10)]

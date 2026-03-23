@@ -39,12 +39,12 @@ namespace Upscale.Web.Models.Entities
         public bool IsLocked { get; set; } = false;
 
         /// <summary>
-        /// The timestamp when the account lockout period expires.
+        /// The timestamp when the account lockout period expires
         /// </summary>
         public DateTime? LockoutEnd { get; set; }
 
         /// <summary>
-        /// Indicates if the account is logically active in the system.
+        /// Indicates if the account is logically active in the system
         /// </summary>
         public bool IsActive { get; set; } = true;
 

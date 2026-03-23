@@ -14,8 +14,6 @@ namespace Upscale.Web.Data
     /// • Passwords hashed with HMACSHA512 + random 128-byte salt, exactly as the
     ///   AccountController.VerifyPasswordHash expects.
     /// • Plain-text passwords are ONLY here for development seed purposes.
-    ///   In production, remove or replace with environment-variable-driven seeding.
-    /// • All seed data matches the original SQL scripts provided.
     /// </summary>
     public static class DbSeeder
     {
@@ -127,7 +125,7 @@ namespace Upscale.Web.Data
         private static void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
         {
             using var hmac = new HMACSHA512();
-            salt = hmac.Key;                                          // random 128-byte key
+            salt = hmac.Key; // random 128-byte key
             hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)); // 64-byte hash
         }
 

@@ -8,7 +8,7 @@ namespace Upscale.Web.Models.ViewModels
     public class LoginViewModel
     {
         /// <summary>
-        /// Gets or sets the document number (DNI, CE, etc.) used as the unique username.
+        /// Gets or sets the document number (DNI, CE) used as the unique username.
         /// </summary>
         [Required(ErrorMessage = "El número de documento es requerido")]
         [StringLength(10, ErrorMessage = "El número de documento no puede exceder los 10 caracteres")]
